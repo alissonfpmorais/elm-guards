@@ -1,4 +1,4 @@
-module Guard exposing (Guard, addConstraints, constraint, hasErrors, isValid, listErrors, new, updateInput, validate)
+module Guard exposing (Guard, addConstraints, constraint, getInput, hasErrors, isValid, listErrors, new, updateInput, validate)
 
 
 type alias Guard e k =
@@ -85,9 +85,7 @@ validate guard =
     let
         value : k
         value =
-            case guard.input of
-                Input i ->
-                    i
+            getInput guard
 
         rules : List (Constraint e k)
         rules =
@@ -136,3 +134,14 @@ listErrors { constraints } =
     List.map
         toError
         constraints.invalid
+
+
+
+-- Utils
+
+
+getInput : Guard e k -> k
+getInput { input } =
+    case input of
+        Input k ->
+            k
