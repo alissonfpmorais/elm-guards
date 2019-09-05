@@ -116,12 +116,12 @@ ruleRunner value c constraints =
 
 isValid : Guard e k -> Bool
 isValid { constraints } =
-    List.isEmpty constraints.invalid
+    List.isEmpty (constraints.invalid ++ constraints.none)
 
 
 hasErrors : Guard e k -> Bool
-hasErrors guard =
-    not (isValid guard)
+hasErrors { constraints } =
+    not (List.isEmpty constraints.invalid)
 
 
 listErrors : Guard e k -> List e
