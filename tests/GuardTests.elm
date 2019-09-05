@@ -9,13 +9,22 @@ import Test exposing (Test, describe, test)
 suite : Test
 suite =
     let
+        nonValidatedGuard =
+            Guard.new ""
+                [ Guard.constraint "match error" (Rule.match "elm-[a-z]+") ]
+
         guard =
             Guard.new ""
                 [ Guard.constraint "match error" (Rule.match "elm-[a-z]+") ]
                 |> Guard.validate
     in
     describe "Guard tests"
-        [ test "Get input without changes must return exactly same previous value" <|
+        [ test "Non validated guard must raise false" <|
+            \_ ->
+                nonValidatedGuard
+                    |> Guard.isValid
+                    |> Expect.equal False
+        , test "Get input without changes must return exactly same previous value" <|
             \_ ->
                 guard
                     |> Guard.getInput
