@@ -35,8 +35,8 @@ new value constraints =
     }
 
 
-constraint : (k -> Bool) -> e -> Constraint e k
-constraint rule error =
+constraint : e -> (k -> Bool) -> Constraint e k
+constraint error rule =
     { rule = rule, error = error }
 
 

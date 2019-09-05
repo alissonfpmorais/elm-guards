@@ -11,7 +11,7 @@ suite =
     let
         guard =
             Guard.new ""
-                [ Guard.constraint (Rule.match "elm-[a-z]+") "match error" ]
+                [ Guard.constraint "match error" (Rule.match "elm-[a-z]+") ]
                 |> Guard.validate
     in
     describe "Guard tests"
@@ -65,7 +65,7 @@ suite =
         , test "Invalid input with new constraint must list errors" <|
             \_ ->
                 guard
-                    |> Guard.addConstraints [ Guard.constraint (Rule.longerThan 7) "longer than error" ]
+                    |> Guard.addConstraints [ Guard.constraint "longer than error" (Rule.longerThan 7) ]
                     |> Guard.validate
                     |> Guard.listErrors
                     |> Expect.equal [ "longer than error", "match error" ]
@@ -73,7 +73,7 @@ suite =
             \_ ->
                 guard
                     |> Guard.updateInput "elm-grd"
-                    |> Guard.addConstraints [ Guard.constraint (Rule.longerThan 7) "longer than error" ]
+                    |> Guard.addConstraints [ Guard.constraint "longer than error" (Rule.longerThan 7) ]
                     |> Guard.validate
                     |> Guard.listErrors
                     |> Expect.equal [ "longer than error" ]
@@ -81,7 +81,7 @@ suite =
             \_ ->
                 guard
                     |> Guard.updateInput "elm-guards"
-                    |> Guard.addConstraints [ Guard.constraint (Rule.longerThan 7) "longer than error" ]
+                    |> Guard.addConstraints [ Guard.constraint "longer than error" (Rule.longerThan 7) ]
                     |> Guard.validate
                     |> Guard.listErrors
                     |> Expect.equal []
